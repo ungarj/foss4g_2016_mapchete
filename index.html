@@ -37,344 +37,353 @@
 			<!-- Any section element inside of this container is displayed as a slide -->
 			<div class="slides">
 				<section>
-					<h1>Mapchete</h1>
-					<h3>parallelized batch geoprocessing using Python</h3>
-					<p>
-						<small>Created by Joachim Ungar / <a href="http://twitter.com/ungarjo">@ungarjo</a></small>
-					</p>
-					<p>
-						<small>EOX IT Services / <a href="http://eox.at">eox.at</a></small>
-					</p>
-					<br/>
-                        <p><a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0; margin:0 0 12px 0;" src="http://i.creativecommons.org/l/by/4.0/80x15.png" /></a><small>&nbsp;This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</small></p>
+					<section>
+						<h1>Mapchete</h1>
+						<h3>parallelized batch geoprocessing using Python</h3>
+						<p>
+							<small>Created by Joachim Ungar / <a href="http://twitter.com/ungarjo">@ungarjo</a></small>
+						</p>
+						<p>
+							<small>EOX IT Services / <a href="http://eox.at">eox.at</a></small>
+						</p>
+						<br/>
+	                        <p><a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0; margin:0 0 12px 0;" src="http://i.creativecommons.org/l/by/4.0/80x15.png" /></a><small>&nbsp;This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</small></p>
 
-					<aside class="notes">
-						Hi, I'm Joachim and I am the cartographer of EOX IT Services. We offer solutions
-						and services in the geodata domain in general and in the Earth Observation
-						domain in particular.
-					</aside>
-				</section>
+						<aside class="notes">
+							Hi, I'm Joachim and I am the cartographer of EOX IT Services. We offer solutions
+							and services in the geodata domain in general and in the Earth Observation
+							domain in particular.
+						</aside>
+					</section>
 
+					<section data-background="img/eox_maps.jpg">
+						<h2 style="text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black"><a href="http://maps.eox.at/">http://maps.eox.at/</a></h2>
+						<aside class="notes">
+							We are also offering global background maps (http://maps.eox.at/) and using them
+							in our web clients such as mapalupa (https://mapalupa.com/). Our map layers are
+							also used by some web clients from the European Space Agency (ESA).
 
-				<section data-background="img/eox_maps.jpg">
-					<h2 style="text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black"><a href="http://maps.eox.at/">http://maps.eox.at/</a></h2>
-					<aside class="notes">
-						We are also offering global background maps (http://maps.eox.at/) and using them
-						in our web clients such as mapalupa (https://mapalupa.com/). Our map layers are
-						also used by some web clients from the European Space Agency (ESA).
+							Styling maps nowadays is apart from the obvious design decisions not a big issue
+							anymore thanks to the capabilities for MapServer or Mapnik which are widely
+							used by various OSM projects.
 
-						Styling maps nowadays is apart from the obvious design decisions not a big issue
-						anymore thanks to the capabilities for MapServer or Mapnik which are widely
-						used by various OSM projects.
-
-						However, when preprocessing certain map elements such as hillshades or contour
-						lines on a global scale, we couldn't find a framework which is as simple to use
-						as for example TileMill for styling.
-					</aside>
-				</section>
-
-				<section>
-					<h2>GDAL</h2>
-					<ul>
-						<li><code>gdaldem hillshade srtm.vrt hillshade.tif</code></li>
-						<li><code>gdal_contour srtm.vrt contours.shp</code></li>
-					</ul>
-					<p></p>
-					<h3>drawbacks</h2>
-					<ol>
-						<li>not viable</li>
-						<li>no customization</li>
-					</ol>
-					<aside class="notes">
-						Yes, GDAL can both generate hillshading and contour lines out of a DEM via
-						command line but
-						(1) applying one of these commands to the global SRTM dataset (XXX x XXX) is not
-						really viable and
-						(2) there are no possibilities to refine the output by using image filters and
-						so on.
-					</aside>
+							However, when preprocessing certain map elements such as hillshades or contour
+							lines on a global scale, we couldn't find a framework which is as simple to use
+							as for example TileMill for styling.
+						</aside>
+					</section>
 				</section>
 
 				<section>
-					<h2>Tile Pyramids</h2>
-					<img width=230px src="https://upload.wikimedia.org/wikipedia/commons/3/3d/Dollarnote_siegel_hq.jpg">
-					<p><small>source: <a href="https://upload.wikimedia.org/wikipedia/commons/3/3d/Dollarnote_siegel_hq.jpg">wikipedia</a></small></p>
-					<aside class="notes">
-						The main challenge here is that the source datasets are too big to be processed
-						at once. Of course, this issue is solved in the design step by simply cutting
-						the world into tiles and render the map in more easily digestible chunks.
-					</aside>
+					<section>
+						<h2>GDAL</h2>
+						<ul>
+							<li><code>gdaldem hillshade srtm.vrt hillshade.tif</code></li>
+							<li><code>gdal_contour srtm.vrt contours.shp</code></li>
+						</ul>
+						<p></p>
+						<h3>drawbacks</h2>
+						<ol>
+							<li>not viable</li>
+							<li>no customization</li>
+						</ol>
+						<aside class="notes">
+							Yes, GDAL can both generate hillshading and contour lines out of a DEM via
+							command line but
+							(1) applying one of these commands to the global SRTM dataset (XXX x XXX) is not
+							really viable and
+							(2) there are no possibilities to refine the output by using image filters and
+							so on.
+						</aside>
+					</section>
+
+					<section>
+						<h2>Tile Pyramids</h2>
+						<img width=230px src="https://upload.wikimedia.org/wikipedia/commons/3/3d/Dollarnote_siegel_hq.jpg">
+						<p><small>source: <a href="https://upload.wikimedia.org/wikipedia/commons/3/3d/Dollarnote_siegel_hq.jpg">wikipedia</a></small></p>
+						<aside class="notes">
+							The main challenge here is that the source datasets are too big to be processed
+							at once. Of course, this issue is solved in the design step by simply cutting
+							the world into tiles and render the map in more easily digestible chunks.
+						</aside>
+					</section>
+
+					<section>
+						<p>tiled data &rarr; CartoCSS/mapfile &rarr; map tile</p>
+						<br />
+						<p class="fragment">tiled data &rarr; process &rarr; process output tile</p>
+						<aside class="notes">
+							The nice thing about the styling step is that there is a style file (CartoCSS,
+							Mapfile, ...) which is applied to the data chunks when rendering. Every WMS
+							layer works that way or any tile cache was rendered this way.
+
+							So, why not use this approach to preprocessing as well?
+						</aside>
+					</section>
 				</section>
 
 				<section>
-					<p>tiled data &rarr; CartoCSS/mapfile &rarr; map tile</p>
-					<br />
-					<p class="fragment">tiled data &rarr; process &rarr; process output tile</p>
-					<aside class="notes">
-						The nice thing about the styling step is that there is a style file (CartoCSS,
-						Mapfile, ...) which is applied to the data chunks when rendering. Every WMS
-						layer works that way or any tile cache was rendered this way.
+					<section>
+						<h2>Mapchete</h2>
+						<ul>
+							<li class="fragment">Python (<a href="https://www.scipy.org/">scipy</a>, <a href="http://www.numpy.org/">numpy</a>, <a href="https://github.com/Toblerity/Shapely">shapely</a>, ...)</li>
+							<li class="fragment">chops data into tiles</li>
+							<li class="fragment">applies user-defined process per tile</li>
+							<li class="fragment"><a href="https://github.com/mapbox/rasterio">rasterio</a> &amp; <a href="https://github.com/Toblerity/Fiona">Fiona</a> for reading raster and vector data</li>
+							<li class="fragment">spherical Mercator or geodetic (WGS84) tile pyramids</li>
+						</ul>
+						<aside class="notes">
+						</aside>
+					</section>
 
-						So, why not use this approach to preprocessing as well?
-					</aside>
+					<section>
+						<h2>Command line utilities</h2>
+						<ol>
+							<li class="fragment grow"><code>mapchete_serve your_process.mapchete</code></li>
+							<li ><code>mapchete_execute your_process.mapchete</code></li>
+						</ol>
+						<aside class="notes">
+							There are two main command line utilities:
+
+							mapchete_serve your_process.mapchete
+
+							This command starts a web server hosting an OpenLayers instance where you can
+							inspect your process outputs as you surf through the map.
+						</aside>
+					</section>
+
+					<section>
+						<h2>mapchete_serve</h2>
+						<ul>
+							<li class="fragment">starts web server (flask)</li>
+							<li class="fragment">localhost:5000 &rarr; OpenLayers</li>
+							<li class="fragment">processes tiles on demand</li>
+							<li class="fragment">always return freshly generated tiles: <code>--overwrite</code></li>
+						</ul>
+						<aside class="notes">
+							This is particularly useful if your source data set is too big to have it
+							comfortably on your laptop. Ideally, you would imagine the development cycle like
+							this:
+							(1) write
+							(2) run
+							(3) (debug)
+							(4) view
+							However, when dealing with larger amounts of data, this is not realistic. If you
+							have the data together with your process script on the server, you would have
+							to download the result after every single run to view it on your local machine.
+							You could also extract subsets of certain regions manually and develop your
+							process using these regional datasets on your local machine, but then you would
+							test your output just on these test regions.
+						</aside>
+					</section>
+
+					<section>
+						<h2>Command line utilities</h2>
+						<ol>
+							<li><code>mapchete_serve your_process.mapchete</code></li>
+							<li class="fragment grow"><code>mapchete_execute your_process.mapchete</code></li>
+						</ol>
+						<aside class="notes">
+							The second command line utility lets you "seed" your process into a full tile
+							pyramid.
+						</aside>
+					</section>
+
+					<section>
+						<h2>mapchete_execute</h2>
+						<ul>
+							<li class="fragment">processes full pyramid</li>
+							<li class="fragment">... or just certain zoom levels: <p><code>--zoom 0 8</code></p></li>
+							<li class="fragment">... or a specific tile (zoom, row, column): <p><code>--tile 5 6 7</code></p></li>
+							<li class="fragment">... or a specific region: <p><code>--bounds 10 40 12 50</code></p></li>
+						</ul>
+						<aside class="notes">
+						</aside>
+					</section>
+
+					<section>
+						<h2>Configuration</h2>
+						<p><code>your_process.mapchete</code></p>
+						<pre><code data-trim contenteditable>
+	%YAML 1.2
+	---
+	process_file: # path to process (python file)
+	input_files:
+	    file1: # path to file 1
+	    file2: # path to file 2
+	output:
+	    path: # absolute output path
+	    format: # PNG, PNG_hillshade, GTiff, GeoJSON, PostGIS or NumPy
+	    type: # geodetic or mercator
+	    dtype: # bool, uint8, uint16, int16, uint32, int32, float32, float64
+	    bands: # number of output bands
+	    nodata: # nodata value
+						</code></pre>
+						<aside class="notes">
+							The .mapchete file has a simple YAML syntax where you define the location of the
+							Python file, the input files required for the process and the desired output
+							format and location.
+						</aside>
+					</section>
+
+					<section>
+						<h2>Configuration</h2>
+						<p><code>your_process.mapchete</code></p>
+						<pre><code data-trim contenteditable>
+	process_minzoom: # minimum zoom level this process is valid
+	process_maxzoom: # maximum zoom level this process is valid
+	process_bounds: # left bottom right top in "type" CRS
+	metatiling: # (default is 1); has to be one of 2, 4, 6, 8 or 16
+						</code></pre>
+						<aside class="notes">
+							There are also optional parameters like a pixel buffer around each tile
+							(required for e.g. hillshade), process zoom levels and bounds as well as
+							metattiling:
+						</aside>
+					</section>
+
+					<section>
+						<h2>Process</h2>
+						<p><code>your_process.py</code></p>
+						<pre><code data-trim contenteditable>
+	#!/usr/bin/env python
+	from mapchete import MapcheteProcess
+	class Process(MapcheteProcess):
+	    """Main process class"""
+	    def __init__(self, **kwargs):
+	        """Process initialization"""
+	        MapcheteProcess.__init__(
+	            self,
+	            identifier = "my_process_id",
+	            title="My long process title",
+	            version = "0.1",
+	            abstract="short description on what my process does",
+	        )
+	    def execute(self):
+	        """User defined process"""
+	        # insert magic here
+						</code></pre>
+						<aside class="notes">
+							Your Python file has to have a certain structure:
+						</aside>
+					</section>
+
+					<section>
+						<h2>Read data</h2>
+						<p><code>your_process.py</code></p>
+						<pre><code data-trim contenteditable>
+	with self.open(
+	    self.params["input_files"]["raster_file"],
+	    resampling="bilinear"
+	    ) as my_raster_rgb_file:
+	    if my_raster_rgb_file.is_empty():
+	        return "empty"
+	    r, g, b = my_raster_rgb_file.read()
+						</code></pre>
+						<aside class="notes">
+							the built-in read functionality automatically reprojects and resamples the data
+							to the tile bounds and resolution and returns the data as a masked numpy array:
+
+							It also works for vector data. Features will be reprojected and clipped to the
+							tile boundaries.
+						</aside>
+					</section>
+
+					<section>
+						<h2>Write data</h2>
+						<p><code>your_process.py</code></p>
+						<pre><code data-trim contenteditable>
+	self.write((r, g, b))
+						</code></pre>
+						<pre><code data-trim contenteditable>
+	self.write(hillshade_array)
+						</code></pre>
+						<pre><code data-trim contenteditable>
+	self.write(features)
+						</code></pre>
+						<p>GeoTIFF, PNG, PNG_hillshade, GeoJSON, NumPy, PostGIS</p>
+						<aside class="notes">
+							the built-in write function takes (for rasters) either a numpy array or a tuple
+							of numpy arrays (for multiple bands):
+						</aside>
+					</section>
+
+					<section>
+						<h2>Common Functions</h2>
+						<ol>
+							<li class="fragment"><code>hillshade()</code></li>
+							<li class="fragment"><code>contours()</code></li>
+							<li class="fragment"><code>clip()</code></li>
+						</ol>
+						<aside class="notes">
+							between read and write, you can do everything possible with numpy like applying
+							image filters, creating a hillshade or mask by a vector dataset.
+							There are a few common functions to help you with your task:
+						</aside>
+					</section>
 				</section>
 
 				<section>
-					<h2>Mapchete</h2>
-					<ul>
-						<li class="fragment">Python (<a href="https://www.scipy.org/">scipy</a>, <a href="http://www.numpy.org/">numpy</a>, <a href="https://github.com/Toblerity/Shapely">shapely</a>, ...)</li>
-						<li class="fragment">chops data into tiles</li>
-						<li class="fragment">applies user-defined process per tile</li>
-						<li class="fragment"><a href="https://github.com/mapbox/rasterio">rasterio</a> &amp; <a href="https://github.com/Toblerity/Fiona">Fiona</a> for reading raster and vector data</li>
-						<li class="fragment">spherical Mercator or geodetic (WGS84) tile pyramids</li>
-					</ul>
-					<aside class="notes">
-					</aside>
+					<section data-background="img/dem_bathymetry.jpg">
+						<h2 style="text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black">Merge DEMs</h2>
+						<p style="text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black"><a href="https://github.com/openterrain/openterrain">OpenTerrain</a></p>
+						<aside class="notes">
+							merge multiple DEMs into one (https://github.com/openterrain/openterrain)
+						</aside>
+					</section>
+
+					<section data-background="img/biggles_alps.jpg">
+						<h2 style="text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black">EOX hillshade</h2>
+						<aside class="notes">
+							create our signature hillshade ("biggles relief"), which attempts to produce
+							similar results as texture shading (http://www.shadedrelief.com/texture_shading/)
+						</aside>
+					</section>
+
+					<section data-background="img/multicolor_contours.jpg">
+						<h2 style="text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black">Multicolor contour lines</h2>
+						<aside class="notes">
+							extract multicolor contour lines: the contour lines of our maps change their
+							color depending whether they are over a glacier (blue) or not (light brown)
+						</aside>
+					</section>
+
+					<section data-background="img/s2_greece.jpg">
+						<h2 style="text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black">Sentinel-2 Cloudless</h2>
+						<aside class="notes">
+							create a cloudless RGB mosaic out of Sentinel-2 data
+						</aside>
+					</section>
+
+					<section data-background="img/s2_wolfgangsee.jpg">
+						<h2 style="text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black">Sentinel-2 Cloudless</h2>
+						<aside class="notes">
+							create a cloudless RGB mosaic out of Sentinel-2 data
+						</aside>
+					</section>
 				</section>
 
 				<section>
-					<h2>Command line utilities</h2>
-					<ol>
-						<li class="fragment grow"><code>mapchete_serve your_process.mapchete</code></li>
-						<li ><code>mapchete_execute your_process.mapchete</code></li>
-					</ol>
-					<aside class="notes">
-						There are two main command line utilities:
+					<section>
+						<h2>Availability</h2>
+						<p>PyPi: <a href="https://pypi.python.org/pypi/mapchete">https://pypi.python.org/pypi/mapchete</a></p>
+						<p>github: <a href="https://github.com/ungarj/mapchete">https://github.com/ungarj/mapchete</a></p>
+						<p>twitter: <a href="https://twitter.com/mapchete">@mapchete</a></p>
+						<aside class="notes">
+						</aside>
+					</section>
 
-						mapchete_serve your_process.mapchete
-
-						This command starts a web server hosting an OpenLayers instance where you can
-						inspect your process outputs as you surf through the map.
-					</aside>
-				</section>
-
-				<section>
-					<h2>mapchete_serve</h2>
-					<ul>
-						<li class="fragment">starts web server (flask)</li>
-						<li class="fragment">localhost:5000 &rarr; OpenLayers</li>
-						<li class="fragment">processes tiles on demand</li>
-						<li class="fragment">always return freshly generated tiles: <code>--overwrite</code></li>
-					</ul>
-					<aside class="notes">
-						This is particularly useful if your source data set is too big to have it
-						comfortably on your laptop. Ideally, you would imagine the development cycle like
-						this:
-						(1) write
-						(2) run
-						(3) (debug)
-						(4) view
-						However, when dealing with larger amounts of data, this is not realistic. If you
-						have the data together with your process script on the server, you would have
-						to download the result after every single run to view it on your local machine.
-						You could also extract subsets of certain regions manually and develop your
-						process using these regional datasets on your local machine, but then you would
-						test your output just on these test regions.
-					</aside>
-				</section>
-
-				<section>
-					<h2>Command line utilities</h2>
-					<ol>
-						<li><code>mapchete_serve your_process.mapchete</code></li>
-						<li class="fragment grow"><code>mapchete_execute your_process.mapchete</code></li>
-					</ol>
-					<aside class="notes">
-						The second command line utility lets you "seed" your process into a full tile
-						pyramid.
-					</aside>
-				</section>
-
-				<section>
-					<h2>mapchete_execute</h2>
-					<ul>
-						<li class="fragment">processes full pyramid</li>
-						<li class="fragment">... or just certain zoom levels: <p><code>--zoom 0 8</code></p></li>
-						<li class="fragment">... or a specific tile (zoom, row, column): <p><code>--tile 5 6 7</code></p></li>
-						<li class="fragment">... or a specific region: <p><code>--bounds 10 40 12 50</code></p></li>
-					</ul>
-					<aside class="notes">
-					</aside>
-				</section>
-
-				<section>
-					<h2>Configuration</h2>
-					<p><code>your_process.mapchete</code></p>
-					<pre><code data-trim contenteditable>
-%YAML 1.2
----
-process_file: # path to process (python file)
-input_files:
-    file1: # path to file 1
-    file2: # path to file 2
-output:
-    path: # absolute output path
-    format: # PNG, PNG_hillshade, GTiff, GeoJSON, PostGIS or NumPy
-    type: # geodetic or mercator
-    dtype: # bool, uint8, uint16, int16, uint32, int32, float32, float64
-    bands: # number of output bands
-    nodata: # nodata value
-					</code></pre>
-					<aside class="notes">
-						The .mapchete file has a simple YAML syntax where you define the location of the
-						Python file, the input files required for the process and the desired output
-						format and location.
-					</aside>
-				</section>
-
-				<section>
-					<h2>Configuration</h2>
-					<p><code>your_process.mapchete</code></p>
-					<pre><code data-trim contenteditable>
-process_minzoom: # minimum zoom level this process is valid
-process_maxzoom: # maximum zoom level this process is valid
-process_bounds: # left bottom right top in "type" CRS
-metatiling: # (default is 1); has to be one of 2, 4, 6, 8 or 16
-					</code></pre>
-					<aside class="notes">
-						There are also optional parameters like a pixel buffer around each tile
-						(required for e.g. hillshade), process zoom levels and bounds as well as
-						metattiling:
-					</aside>
-				</section>
-
-				<section>
-					<h2>Process</h2>
-					<p><code>your_process.py</code></p>
-					<pre><code data-trim contenteditable>
-#!/usr/bin/env python
-from mapchete import MapcheteProcess
-class Process(MapcheteProcess):
-    """Main process class"""
-    def __init__(self, **kwargs):
-        """Process initialization"""
-        MapcheteProcess.__init__(
-            self,
-            identifier = "my_process_id",
-            title="My long process title",
-            version = "0.1",
-            abstract="short description on what my process does",
-        )
-    def execute(self):
-        """User defined process"""
-        # insert magic here
-					</code></pre>
-					<aside class="notes">
-						Your Python file has to have a certain structure:
-					</aside>
-				</section>
-
-				<section>
-					<h2>Read data</h2>
-					<p><code>your_process.py</code></p>
-					<pre><code data-trim contenteditable>
-with self.open(
-    self.params["input_files"]["raster_file"],
-    resampling="bilinear"
-    ) as my_raster_rgb_file:
-    if my_raster_rgb_file.is_empty():
-        return "empty"
-    r, g, b = my_raster_rgb_file.read()
-					</code></pre>
-					<aside class="notes">
-						the built-in read functionality automatically reprojects and resamples the data
-						to the tile bounds and resolution and returns the data as a masked numpy array:
-
-						It also works for vector data. Features will be reprojected and clipped to the
-						tile boundaries.
-					</aside>
-				</section>
-
-				<section>
-					<h2>Write data</h2>
-					<p><code>your_process.py</code></p>
-					<pre><code data-trim contenteditable>
-self.write((r, g, b))
-					</code></pre>
-					<pre><code data-trim contenteditable>
-self.write(hillshade_array)
-					</code></pre>
-					<pre><code data-trim contenteditable>
-self.write(features)
-					</code></pre>
-					<p>GeoTIFF, PNG, PNG_hillshade, GeoJSON, NumPy, PostGIS</p>
-					<aside class="notes">
-						the built-in write function takes (for rasters) either a numpy array or a tuple
-						of numpy arrays (for multiple bands):
-					</aside>
-				</section>
-
-				<section>
-					<h2>Common Functions</h2>
-					<ol>
-						<li class="fragment"><code>hillshade()</code></li>
-						<li class="fragment"><code>contours()</code></li>
-						<li class="fragment"><code>clip()</code></li>
-					</ol>
-					<aside class="notes">
-						between read and write, you can do everything possible with numpy like applying
-						image filters, creating a hillshade or mask by a vector dataset.
-						There are a few common functions to help you with your task:
-					</aside>
-				</section>
-
-				<section data-background="img/dem_bathymetry.jpg">
-					<h2 style="text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black">Merge DEMs</h2>
-					<p style="text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black"><a href="https://github.com/openterrain/openterrain">OpenTerrain</a></p>
-					<aside class="notes">
-						merge multiple DEMs into one (https://github.com/openterrain/openterrain)
-					</aside>
-				</section>
-
-				<section data-background="img/biggles_alps.jpg">
-					<h2 style="text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black">EOX hillshade</h2>
-					<aside class="notes">
-						create our signature hillshade ("biggles relief"), which attempts to produce
-						similar results as texture shading (http://www.shadedrelief.com/texture_shading/)
-					</aside>
-				</section>
-
-				<section data-background="img/multicolor_contours.jpg">
-					<h2 style="text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black">Multicolor contour lines</h2>
-					<aside class="notes">
-						extract multicolor contour lines: the contour lines of our maps change their
-						color depending whether they are over a glacier (blue) or not (light brown)
-					</aside>
-				</section>
-
-				<section data-background="img/s2_greece.jpg">
-					<h2 style="text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black">Sentinel-2 Cloudless</h2>
-					<aside class="notes">
-						create a cloudless RGB mosaic out of Sentinel-2 data
-					</aside>
-				</section>
-
-				<section data-background="img/s2_wolfgangsee.jpg">
-					<h2 style="text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black">Sentinel-2 Cloudless</h2>
-					<aside class="notes">
-						create a cloudless RGB mosaic out of Sentinel-2 data
-					</aside>
-				</section>
-
-				<section>
-					<h2>Availability</h2>
-					<p>PyPi: <a href="https://pypi.python.org/pypi/mapchete">https://pypi.python.org/pypi/mapchete</a></p>
-					<p>github: <a href="https://github.com/ungarj/mapchete">https://github.com/ungarj/mapchete</a></p>
-					<p>twitter: <a href="https://twitter.com/mapchete">@mapchete</a></p>
-					<aside class="notes">
-					</aside>
-				</section>
-
-				<section>
-					<h2>Thank You</h2>
-					<p>
-						Joachim Ungar / <a href="http://twitter.com/ungarjo">@ungarjo</a>
-					</p>
-					<p>
-						EOX IT Services / <a href="http://eox.at">eox.at</a>
-					</p>
-					<aside class="notes">
-					</aside>
+					<section>
+						<h2>Thank You</h2>
+						<p>
+							Joachim Ungar / <a href="http://twitter.com/ungarjo">@ungarjo</a>
+						</p>
+						<p>
+							EOX IT Services / <a href="http://eox.at">eox.at</a>
+						</p>
+						<aside class="notes">
+						</aside>
+					</section>
 				</section>
 
 			</div>
