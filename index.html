@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" style="background-color: inherit;">
 
 	<head>
 		<meta charset="utf-8">
@@ -15,7 +15,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
 		<link rel="stylesheet" href="reveal.js/css/reveal.min.css">
-		<link rel="stylesheet" href="reveal.js/css/theme/simple.css" id="theme">
+		<link rel="stylesheet" href="reveal.js/css/theme/night.css" id="theme">
 
 		<!-- For syntax highlighting -->
 		<link rel="stylesheet" href="reveal.js/lib/css/zenburn.css">
@@ -45,6 +45,9 @@
 					<p>
 						<small>EOX IT Services / <a href="http://eox.at">eox.at</a></small>
 					</p>
+					<br/>
+                        <p><a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0; margin:0 0 12px 0;" src="http://i.creativecommons.org/l/by/4.0/80x15.png" /></a><small>&nbsp;This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</small></p>
+
 					<aside class="notes">
 						Hi, I'm Joachim and I am the cartographer of EOX IT Services. We offer solutions
 						and services in the geodata domain in general and in the Earth Observation
@@ -53,20 +56,8 @@
 				</section>
 
 
-				<section data-background="img/eox_maps_overlay.jpg">
-					<div style="
-						background-color: rgba(255,255,255,0.8);
-    					display: inline-block;
-    					padding: 10px;">
-						<h2><a href="http://maps.eox.at/">http://maps.eox.at/</a></h2>
-						<!-- <p>
-							<a href="http://maps.eox.at/">http://maps.eox.at/</a>
-						</p>
-						<p>
-							<a href="https://mapalupa.com/">https://mapalupa.com/</a>
-						</p> -->
-					</div>
-
+				<section data-background="img/eox_maps.jpg">
+					<h2 style="text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black"><a href="http://maps.eox.at/">http://maps.eox.at/</a></h2>
 					<aside class="notes">
 						We are also offering global background maps (http://maps.eox.at/) and using them
 						in our web clients such as mapalupa (https://mapalupa.com/). Our map layers are
@@ -116,8 +107,9 @@
 				</section>
 
 				<section>
-					<p>tiled data --> CartoCSS/mapfile --> map tile</p>
-					<p class="fragment">tiled data --> process --> hillshade tile</p>
+					<p>tiled data &rarr; CartoCSS/mapfile &rarr; map tile</p>
+					<br />
+					<p class="fragment">tiled data &rarr; process &rarr; process output tile</p>
 					<aside class="notes">
 						The nice thing about the styling step is that there is a style file (CartoCSS,
 						Mapfile, ...) which is applied to the data chunks when rendering. Every WMS
@@ -130,10 +122,10 @@
 				<section>
 					<h2>Mapchete</h2>
 					<ul>
-						<li class="fragment">Python (scipy, numpy, shapely, ...)</li>
+						<li class="fragment">Python (<a href="https://www.scipy.org/">scipy</a>, <a href="http://www.numpy.org/">numpy</a>, <a href="https://github.com/Toblerity/Shapely">shapely</a>, ...)</li>
 						<li class="fragment">chops data into tiles</li>
 						<li class="fragment">applies user-defined process per tile</li>
-						<li class="fragment">rasterio & Fiona for reading</li>
+						<li class="fragment"><a href="https://github.com/mapbox/rasterio">rasterio</a> &amp; <a href="https://github.com/Toblerity/Fiona">Fiona</a> for reading raster and vector data</li>
 						<li class="fragment">spherical Mercator or geodetic (WGS84) tile pyramids</li>
 					</ul>
 					<aside class="notes">
@@ -160,7 +152,7 @@
 					<h2>mapchete_serve</h2>
 					<ul>
 						<li class="fragment">starts web server (flask)</li>
-						<li class="fragment">localhost:5000 --> OpenLayers</li>
+						<li class="fragment">localhost:5000 &rarr; OpenLayers</li>
 						<li class="fragment">processes tiles on demand</li>
 						<li class="fragment">always return freshly generated tiles: <code>--overwrite</code></li>
 					</ul>
@@ -197,9 +189,9 @@
 					<h2>mapchete_execute</h2>
 					<ul>
 						<li class="fragment">processes full pyramid</li>
-						<li class="fragment">... or just certain zoom levels: <code>--zoom 0 8</code></li>
-						<li class="fragment">... or a specific tile (zoom, row, column): <code>--tile 5 6 7</code></li>
-						<li class="fragment">... or a specific region: <code>--bounds 10 40 12 50</code></li>
+						<li class="fragment">... or just certain zoom levels: <p><code>--zoom 0 8</code></p></li>
+						<li class="fragment">... or a specific tile (zoom, row, column): <p><code>--tile 5 6 7</code></p></li>
+						<li class="fragment">... or a specific region: <p><code>--bounds 10 40 12 50</code></p></li>
 					</ul>
 					<aside class="notes">
 					</aside>
@@ -327,25 +319,15 @@ self.write(features)
 				</section>
 
 				<section data-background="img/dem_bathymetry.jpg">
-					<div style="
-						background-color: rgba(255,255,255,0.8);
-    					display: inline-block;
-    					padding: 10px;">
-						<h2>Merge DEMs</h2>
-						<p><a href="https://github.com/openterrain/openterrain">OpenTerrain</a></p>
-					</div>
+					<h2 style="text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black">Merge DEMs</h2>
+					<p style="text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black"><a href="https://github.com/openterrain/openterrain">OpenTerrain</a></p>
 					<aside class="notes">
 						merge multiple DEMs into one (https://github.com/openterrain/openterrain)
 					</aside>
 				</section>
 
 				<section data-background="img/biggles_alps.jpg">
-					<div style="
-						background-color: rgba(255,255,255,0.8);
-    					display: inline-block;
-    					padding: 10px;">
-						<h2>EOX hillshade</h2>
-					</div>
+					<h2 style="text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black">EOX hillshade</h2>
 					<aside class="notes">
 						create our signature hillshade ("biggles relief"), which attempts to produce
 						similar results as texture shading (http://www.shadedrelief.com/texture_shading/)
@@ -353,12 +335,7 @@ self.write(features)
 				</section>
 
 				<section data-background="img/multicolor_contours.jpg">
-					<div style="
-						background-color: rgba(255,255,255,0.8);
-    					display: inline-block;
-    					padding: 10px;">
-						<h2>Multicolor contour lines</h2>
-					</div>
+					<h2 style="text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black">Multicolor contour lines</h2>
 					<aside class="notes">
 						extract multicolor contour lines: the contour lines of our maps change their
 						color depending whether they are over a glacier (blue) or not (light brown)
@@ -366,24 +343,14 @@ self.write(features)
 				</section>
 
 				<section data-background="img/s2_greece.jpg">
-					<div style="
-						background-color: rgba(255,255,255,0.8);
-    					display: inline-block;
-    					padding: 10px;">
-						<h2>Sentinel-2 Cloudless</h2>
-					</div>
+					<h2 style="text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black">Sentinel-2 Cloudless</h2>
 					<aside class="notes">
 						create a cloudless RGB mosaic out of Sentinel-2 data
 					</aside>
 				</section>
 
 				<section data-background="img/s2_wolfgangsee.jpg">
-					<div style="
-						background-color: rgba(255,255,255,0.8);
-    					display: inline-block;
-    					padding: 10px;">
-						<h2>Sentinel-2 Cloudless</h2>
-					</div>
+					<h2 style="text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black">Sentinel-2 Cloudless</h2>
 					<aside class="notes">
 						create a cloudless RGB mosaic out of Sentinel-2 data
 					</aside>
@@ -391,8 +358,8 @@ self.write(features)
 
 				<section>
 					<h2>Availability</h2>
-					<p>Mapchete is available on PyPi: <a href="https://pypi.python.org/pypi/mapchete">https://pypi.python.org/pypi/mapchete</a></p>
-					<code>pip install mapchete</code>
+					<p>PyPi: <a href="https://pypi.python.org/pypi/mapchete">https://pypi.python.org/pypi/mapchete</a></p>
+					<p>github: <a href="https://github.com/ungarj/mapchete">https://github.com/ungarj/mapchete</a></p>
 					<p>twitter: <a href="https://twitter.com/mapchete">@mapchete</a></p>
 					<aside class="notes">
 					</aside>
