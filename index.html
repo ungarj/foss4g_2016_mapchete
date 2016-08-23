@@ -205,19 +205,19 @@
 						<h2>Configuration</h2>
 						<p><code>your_process.mapchete</code></p>
 						<pre><code data-trim contenteditable>
-	%YAML 1.2
-	---
-	process_file: # path to process (python file)
-	input_files:
-	    file1: # path to file 1
-	    file2: # path to file 2
-	output:
-	    path: # absolute output path
-	    format: # PNG, PNG_hillshade, GTiff, GeoJSON, PostGIS or NumPy
-	    type: # geodetic or mercator
-	    dtype: # bool, uint8, uint16, int16, uint32, int32, float32, float64
-	    bands: # number of output bands
-	    nodata: # nodata value
+%YAML 1.2
+---
+process_file: # path to process (python file)
+input_files:
+    file1: # path to file 1
+    file2: # path to file 2
+output:
+    path: # absolute output path
+    format: # PNG, PNG_hillshade, GTiff, GeoJSON, PostGIS or NumPy
+    type: # geodetic or mercator
+    dtype: # bool, uint8, uint16, int16, uint32, int32, float32, float64
+    bands: # number of output bands
+    nodata: # nodata value
 						</code></pre>
 						<aside class="notes">
 							The .mapchete file has a simple YAML syntax where you define the location of the
@@ -230,10 +230,10 @@
 						<h2>Configuration</h2>
 						<p><code>your_process.mapchete</code></p>
 						<pre><code data-trim contenteditable>
-	process_minzoom: # minimum zoom level this process is valid
-	process_maxzoom: # maximum zoom level this process is valid
-	process_bounds: # left bottom right top in "type" CRS
-	metatiling: # (default is 1); has to be one of 2, 4, 6, 8 or 16
+process_minzoom: # minimum zoom level this process is valid
+process_maxzoom: # maximum zoom level this process is valid
+process_bounds: # left bottom right top in "type" CRS
+metatiling: # (default is 1); has to be one of 2, 4, 6, 8 or 16
 						</code></pre>
 						<aside class="notes">
 							There are also optional parameters like a pixel buffer around each tile
@@ -246,22 +246,22 @@
 						<h2>Process</h2>
 						<p><code>your_process.py</code></p>
 						<pre><code data-trim contenteditable>
-	#!/usr/bin/env python
-	from mapchete import MapcheteProcess
-	class Process(MapcheteProcess):
-	    """Main process class"""
-	    def __init__(self, **kwargs):
-	        """Process initialization"""
-	        MapcheteProcess.__init__(
-	            self,
-	            identifier = "my_process_id",
-	            title="My long process title",
-	            version = "0.1",
-	            abstract="short description on what my process does",
-	        )
-	    def execute(self):
-	        """User defined process"""
-	        # insert magic here
+#!/usr/bin/env python
+from mapchete import MapcheteProcess
+class Process(MapcheteProcess):
+    """Main process class"""
+    def __init__(self, **kwargs):
+        """Process initialization"""
+        MapcheteProcess.__init__(
+            self,
+            identifier = "my_process_id",
+            title="My long process title",
+            version = "0.1",
+            abstract="short description on what my process does",
+        )
+    def execute(self):
+        """User defined process"""
+        # insert magic here
 						</code></pre>
 						<aside class="notes">
 							Your Python file has to have a certain structure:
@@ -272,13 +272,13 @@
 						<h2>Read data</h2>
 						<p><code>your_process.py</code></p>
 						<pre><code data-trim contenteditable>
-	with self.open(
-	    self.params["input_files"]["raster_file"],
-	    resampling="bilinear"
-	    ) as my_raster_rgb_file:
-	    if my_raster_rgb_file.is_empty():
-	        return "empty"
-	    r, g, b = my_raster_rgb_file.read()
+with self.open(
+    self.params["input_files"]["raster_file"],
+    resampling="bilinear"
+    ) as my_raster_rgb_file:
+    if my_raster_rgb_file.is_empty():
+        return "empty"
+    r, g, b = my_raster_rgb_file.read()
 						</code></pre>
 						<aside class="notes">
 							the built-in read functionality automatically reprojects and resamples the data
@@ -293,13 +293,13 @@
 						<h2>Write data</h2>
 						<p><code>your_process.py</code></p>
 						<pre><code data-trim contenteditable>
-	self.write((r, g, b))
+self.write((r, g, b))
 						</code></pre>
 						<pre><code data-trim contenteditable>
-	self.write(hillshade_array)
+self.write(hillshade_array)
 						</code></pre>
 						<pre><code data-trim contenteditable>
-	self.write(features)
+self.write(features)
 						</code></pre>
 						<p>GeoTIFF, PNG, PNG_hillshade, GeoJSON, NumPy, PostGIS</p>
 						<aside class="notes">
