@@ -37,7 +37,7 @@
 			<!-- Any section element inside of this container is displayed as a slide -->
 			<div class="slides">
 				<section>
-					<section>
+					<section data-background="img/world_tiles.png">
 						<h1>Mapchete</h1>
 						<h3>parallelized batch geoprocessing using Python</h3>
 						<p>
@@ -46,8 +46,9 @@
 						<p>
 							<small>EOX IT Services / <a href="http://eox.at">eox.at</a></small>
 						</p>
+						<img style="background: none; border: none;" src="img/eox.svg">
 						<br/>
-	                        <p><a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0; margin:0 0 12px 0;" src="http://i.creativecommons.org/l/by/4.0/80x15.png" /></a><small>&nbsp;This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</small></p>
+                        <p><a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0; margin:0 0 12px 0;" src="http://i.creativecommons.org/l/by/4.0/80x15.png" /></a><small>&nbsp;This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</small></p>
 
 						<aside class="notes">
 							Hi, I'm Joachim and I am the cartographer of EOX IT Services. We offer solutions
@@ -74,18 +75,19 @@
 					</section>
 				</section>
 
-				<section>
+				<section data-background="img/biggles_alps_dark.jpg">
 					<section>
-						<h2>GDAL</h2>
+						<h2>GDAL command line tools</h2>
+						<br />
 						<ul>
 							<li><code>gdaldem hillshade srtm.vrt hillshade.tif</code></li>
 							<li><code>gdal_contour srtm.vrt contours.shp</code></li>
 						</ul>
-						<p></p>
-						<h3>drawbacks</h2>
+						<br />
+						<br />
 						<ol>
-							<li>not viable</li>
-							<li>no customization</li>
+							<li class="fragment">not viable (1,296,001 x 417,601 pixels)</li>
+							<li class="fragment">no customization (image filters, clipping, ...)</li>
 						</ol>
 						<aside class="notes">
 							Yes, GDAL can both generate hillshading and contour lines out of a DEM via
@@ -122,7 +124,7 @@
 					</section>
 				</section>
 
-				<section>
+				<section data-background="img/eox_maps_dark.jpg">
 					<section>
 						<h2>Mapchete</h2>
 						<ul>
@@ -234,6 +236,11 @@ process_minzoom: # minimum zoom level this process is valid
 process_maxzoom: # maximum zoom level this process is valid
 process_bounds: # left bottom right top in "type" CRS
 metatiling: # (default is 1); has to be one of 2, 4, 6, 8 or 16
+
+light_azimuth: 315 # user defined parameters
+exaggeration: # user defined parameters dependending on zoom level
+	zoom<5: 10
+	zoom>=5: 5
 						</code></pre>
 						<aside class="notes">
 							There are also optional parameters like a pixel buffer around each tile
@@ -259,6 +266,7 @@ class Process(MapcheteProcess):
             version = "0.1",
             abstract="short description on what my process does",
         )
+
     def execute(self):
         """User defined process"""
         # insert magic here
@@ -273,12 +281,14 @@ class Process(MapcheteProcess):
 						<p><code>your_process.py</code></p>
 						<pre><code data-trim contenteditable>
 with self.open(
-    self.params["input_files"]["raster_file"],
-    resampling="bilinear"
+    self.params["input_files"]["raster_file"], # object containing process config
+    resampling="bilinear" # rasterio resampling
     ) as my_raster_rgb_file:
-    if my_raster_rgb_file.is_empty():
+
+    if my_raster_rgb_file.is_empty(): # if empty, quit tile process
         return "empty"
-    r, g, b = my_raster_rgb_file.read()
+
+    r, g, b = my_raster_rgb_file.read() # read RGB bands
 						</code></pre>
 						<aside class="notes">
 							the built-in read functionality automatically reprojects and resamples the data
@@ -293,13 +303,13 @@ with self.open(
 						<h2>Write data</h2>
 						<p><code>your_process.py</code></p>
 						<pre><code data-trim contenteditable>
-self.write((r, g, b))
+self.write((r, g, b)) # tuple of bands
 						</code></pre>
 						<pre><code data-trim contenteditable>
-self.write(hillshade_array)
+self.write(hillshade_array) # single band as array
 						</code></pre>
 						<pre><code data-trim contenteditable>
-self.write(features)
+self.write(features) # GeoJSON-like vector data
 						</code></pre>
 						<p>GeoTIFF, PNG, PNG_hillshade, GeoJSON, NumPy, PostGIS</p>
 						<aside class="notes">
@@ -363,7 +373,7 @@ self.write(features)
 					</section>
 				</section>
 
-				<section>
+				<section data-background="img/world_tiles.png">
 					<section>
 						<h2>Availability</h2>
 						<p>PyPi: <a href="https://pypi.python.org/pypi/mapchete">https://pypi.python.org/pypi/mapchete</a></p>
