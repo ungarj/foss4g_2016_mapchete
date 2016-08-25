@@ -63,11 +63,11 @@
 							We are also offering global background maps (http://maps.eox.at/) and using them
 							in our web clients such as mapalupa (https://mapalupa.com/). Our map layers are
 							also used by some web clients from the European Space Agency (ESA).
-
+							<br />
 							Styling maps nowadays is apart from the obvious design decisions not a big issue
 							anymore thanks to the capabilities for MapServer or Mapnik which are widely
 							used by various OSM projects.
-
+							<br />
 							However, when preprocessing certain map elements such as hillshades or contour
 							lines on a global scale, we couldn't find a framework which is as simple to use
 							as for example TileMill for styling.
@@ -92,8 +92,10 @@
 						<aside class="notes">
 							Yes, GDAL can both generate hillshading and contour lines out of a DEM via
 							command line but
+							<br />
 							(1) applying one of these commands to the global SRTM dataset (XXX x XXX) is not
 							really viable and
+							<br />
 							(2) there are no possibilities to refine the output by using image filters and
 							so on.
 						</aside>
@@ -114,11 +116,12 @@
 						<p>tiled data &rarr; CartoCSS/mapfile &rarr; map tile</p>
 						<br />
 						<p class="fragment">tiled data &rarr; process &rarr; process output tile</p>
+						<img class="fragment" src="https://images.hellogiggles.com/uploads/2015/12/11/GinaGIF.gif">
 						<aside class="notes">
 							The nice thing about the styling step is that there is a style file (CartoCSS,
 							Mapfile, ...) which is applied to the data chunks when rendering. Every WMS
 							layer works that way or any tile cache was rendered this way.
-
+							<br />
 							So, why not use this approach to preprocessing as well?
 						</aside>
 					</section>
@@ -146,9 +149,9 @@
 						</ol>
 						<aside class="notes">
 							There are two main command line utilities:
-
+							<br />
 							mapchete_serve your_process.mapchete
-
+							<br />
 							This command starts a web server hosting an OpenLayers instance where you can
 							inspect your process outputs as you surf through the map.
 						</aside>
@@ -170,6 +173,7 @@
 							(2) run
 							(3) (debug)
 							(4) view
+							<br />
 							However, when dealing with larger amounts of data, this is not realistic. If you
 							have the data together with your process script on the server, you would have
 							to download the result after every single run to view it on your local machine.
@@ -293,7 +297,7 @@ with self.open(
 						<aside class="notes">
 							the built-in read functionality automatically reprojects and resamples the data
 							to the tile bounds and resolution and returns the data as a masked numpy array:
-
+							<br />
 							It also works for vector data. Features will be reprojected and clipped to the
 							tile boundaries.
 						</aside>
