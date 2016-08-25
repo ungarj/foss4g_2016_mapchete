@@ -123,6 +123,8 @@
 							layer works that way or any tile cache was rendered this way.
 							<br />
 							So, why not use this approach to preprocessing as well?
+							<br />
+							There must be something out there ... but it wasn't.
 						</aside>
 					</section>
 				</section>
@@ -138,14 +140,27 @@
 							<li class="fragment">spherical Mercator or geodetic (WGS84) tile pyramids</li>
 						</ul>
 						<aside class="notes">
+							So, we decided and give it a shot and create our own tool, named Mapchete. It is
+							written in Python and can run processes written in Python.
+							<br />
+							There are a lot of good and useful modules out there for geoprocessing. Among them
+							scipy, numpy or shapely.
+							<br />
+							Mapchete simply chops your data into tiles using tile pyramid definitions from
+							WMTS and simply applies your Python code to these tiles.
+							<br />
+							Under the hood it uses rasterio and Fiona to read raster or vector data.
+							<br />
+							And it handles tile pyramids for both the well-known Spherical Mercator and the WGS84
+							grids.
 						</aside>
 					</section>
 
 					<section>
 						<h2>Command line utilities</h2>
 						<ol>
-							<li class="fragment grow"><code>mapchete_serve your_process.mapchete</code></li>
-							<li ><code>mapchete_execute your_process.mapchete</code></li>
+							<li class="fragment grow"><code>mapchete_serve</code></li>
+							<li ><code>mapchete_execute</code></li>
 						</ol>
 						<aside class="notes">
 							There are two main command line utilities:
@@ -186,8 +201,8 @@
 					<section>
 						<h2>Command line utilities</h2>
 						<ol>
-							<li><code>mapchete_serve your_process.mapchete</code></li>
-							<li class="fragment grow"><code>mapchete_execute your_process.mapchete</code></li>
+							<li><code>mapchete_serve</code></li>
+							<li class="fragment grow"><code>mapchete_execute</code></li>
 						</ol>
 						<aside class="notes">
 							The second command line utility lets you "seed" your process into a full tile
